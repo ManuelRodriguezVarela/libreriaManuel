@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- carga del archivo de propiedades que se encuentra en la la carpeta config (src) -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/data-source.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Inyeccion de propiedades del bean con datos del archivo de propiedades -->
+	<bean id="connectionMgr" class="com.grupoatrium.persistencia.impl.ConnectionMgr">
+		<property name="driver" value="${driver}"/>
+		<property name="url" value="${url}"/>
+		<property name="usuario" value="${user}"/>
+		<property name="password" value="${pw}"/>
+	</bean>
+	
+	<!-- Configuracion abstracta sin clase -->
+	<bean id="abstractDao" abstract="true">
+		<property name="connMgr" ref="connectionMgr"/>
+	</bean>
+	
+	<!-- herencia con clase abstracta sin clase asociada -->
+	<bean id="librosDao" parent="abstractDao" class="com.grupoatrium.persistencia.impl.LibrosDao"/>
+	
+	<bean id="editorialesDao" parent="abstractDao" class="com.grupoatrium.persistencia.impl.EditorialesDao"/>
+	
+</beans>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+	
+	<!-- Inyeccion de dependencias a traves del constructor -->
+	<!-- bean constructor tipo -->
+	<bean id="autor1" class="com.grupoatrium.modelo.Autor">
+		<constructor-arg type="java.lang.String" value="Paul Auster"/>
+		<constructor-arg type="java.lang.String" value="Estadounidense"/>
+		<constructor-arg type="java.lang.String" value="comentario sobre Paul Auster"/>
+	</bean>
+	
+	<!-- bean constructor por indice -->
+	<bean id="autor2" class="com.grupoatrium.modelo.Autor">
+		<constructor-arg index="0" value="Haruki Murakami"/>
+		<constructor-arg index="1" value="Japones"/>
+		<constructor-arg index="2" value="comentario sobre Haruki Murakami"/>
+	</bean>
+	
+	<!-- bean constructor por name -->
+	<bean id="autor3" class="com.grupoatrium.modelo.Autor">
+		<constructor-arg name="nombre" value="Gabriel Garcia Marquez"/>
+		<constructor-arg name="nacionalidad" value="Mexicano"/>
+		<constructor-arg name="comentarios" value="comentario sobre Gabriel Garcia Marquez"/>
+	</bean>
+	
+	<!-- bean inyeccion de propiedades usa el metodo set -->
+	<bean id="editorial" class="com.grupoatrium.modelo.Editorial">
+		<property name="nombre">
+			<value type="java.lang.String">miEditorial</value>
+		</property>
+		<property name="direccion">
+			<!-- bean interno y anonimo 
+			-->
+			<bean class="com.grupoatrium.modelo.Direccion">
+				<property name="calle" value="calle del libro"/> 
+				<property name="numero" value="5"/>
+				<property name="poblacion" value="Teo"/>
+				<property name="cp" value="1515"/>
+				<property name="provincia" value="A Coruña"/>
+			</bean>
+		</property>
+		<property name="nif">
+			<value type="java.lang.String">B-2558525</value>
+		</property>
+	</bean>
+	
+	<!-- bean inyeccion de propiedades -->
+	<bean id="libro1" class="com.grupoatrium.modelo.Libro">
+		<property name="isbn" value="afd11651561dfds"/>
+		<property name="titulo" value="Brooklyn Follies"/>
+		<property name="autores">
+			<list value-type="com.grupoatrium.modelo.Autor">
+				<ref bean="autor1"/>
+			</list>
+		</property> 
+		<property name="editorial" ref="editorial"/>
+		<property name="publicacion" value="ebook"/>
+		<property name="precio" value="12"/>
+		<property name="descripcion" value="esto es la descripcion de Brooklyn Follies del autor Paul Auster"/>
+	</bean>
+	
+	<!-- bean inyeccion de propiedades -->
+	<bean id="libro2" class="com.grupoatrium.modelo.Libro">
+		<property name="isbn" value="afd11651561dfds"/>
+		<property name="titulo" value="Brooklyn Follies"/>
+		<property name="autores">
+			<list value-type="com.grupoatrium.modelo.Autor">
+				<ref bean="autor2"/>
+			</list>
+		</property> 
+		<property name="editorial" ref="editorial"/>
+		<property name="publicacion" value="ebook"/>
+		<property name="precio" value="20"/>
+		<property name="descripcion" value="esto es la descripcion de Brooklyn Follies del autor Paul Auster"/>
+	</bean>
+	
+	<!-- bean inyeccion de propiedades -->
+	<bean id="libro3" class="com.grupoatrium.modelo.Libro">
+		<property name="isbn" value="etgre27275257e"/>
+		<property name="titulo" value="Cien años de soledad"/>
+		<property name="autores">
+			<list value-type="com.grupoatrium.modelo.Autor">
+				<ref bean="autor3"/>
+			</list>
+		</property> 
+		<property name="editorial" ref="editorial"/>
+		<property name="publicacion" value="papel"/>
+		<property name="precio" value="20"/>
+		<property name="descripcion" value="esto es la descripcion de Cien años de soledad del autor Gabriel Garcia Marquez"/>
+	</bean>
+	
+</beans>
